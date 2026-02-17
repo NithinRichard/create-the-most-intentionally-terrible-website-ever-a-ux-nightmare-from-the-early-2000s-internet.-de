@@ -36,6 +36,8 @@ export function ChaosMode() {
   const [claimLabel] = useState(() => randomItem(claimLabels));
   const [progress, setProgress] = useState(() => [19, 67, 42]);
   const [shieldOn, setShieldOn] = useState(false);
+  const [newsletterOpen, setNewsletterOpen] = useState(false);
+  const [newsletterDismissed, setNewsletterDismissed] = useState(false);
 
   useEffect(() => {
     const popupTimer = setInterval(() => {
@@ -78,6 +80,30 @@ export function ChaosMode() {
     return () => clearInterval(shieldTimer);
   }, []);
 
+  useEffect(() => {
+    const dismissed = sessionStorage.getItem("newsletter-dismissed") === "1";
+    if (dismissed) {
+      setNewsletterDismissed(true);
+      return;
+    }
+
+    const onScroll = () => {
+      if (newsletterDismissed || dismissed) return;
+      setNewsletterOpen(true);
+      setChaosScore((score) => score + 2);
+    };
+
+    let opened = false;
+    const onceOnScroll = () => {
+      if (opened) return;
+      opened = true;
+      onScroll();
+    };
+
+    window.addEventListener("scroll", onceOnScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onceOnScroll);
+  }, [newsletterDismissed]);
+
   const meterText = useMemo(() => {
     if (chaosScore < 5) return "Mildly annoying";
     if (chaosScore < 10) return "Actively unpleasant";
@@ -99,6 +125,12 @@ export function ChaosMode() {
     setChaosScore((score) => score + 1);
   }
 
+  function closeNewsletter() {
+    setNewsletterOpen(false);
+    setNewsletterDismissed(true);
+    sessionStorage.setItem("newsletter-dismissed", "1");
+  }
+
   return (
     <>
       {shieldOn && (
@@ -108,6 +140,24 @@ export function ChaosMode() {
         >
           <div className="border-4 border-black bg-yellow-300 p-3 text-center text-xs font-black uppercase">
             click blocked by premium security layer
+          </div>
+        </div>
+      )}
+
+      {newsletterOpen && (
+        <div className="fixed inset-0 z-[75] grid place-items-center bg-black/55 p-4">
+          <div className="w-full max-w-lg border-4 border-black bg-white p-4 text-center">
+            <p className="blink text-xl font-black uppercase">exclusive vip newsletter</p>
+            <p className="mt-2 text-xs font-black uppercase">enter your email to unlock 0 secrets</p>
+            <input className="mt-3 w-full border-4 border-black p-2 text-xs font-black uppercase" placeholder="EMAIL ADDRESS" />
+            <div className="mt-3 flex gap-2">
+              <button onClick={closeNewsletter} className="flex-1 border-2 border-black bg-red-300 px-3 py-2 text-xs font-black uppercase">
+                no thanks
+              </button>
+              <button onClick={closeNewsletter} className="flex-1 border-2 border-black bg-lime-300 px-3 py-2 text-xs font-black uppercase">
+                subscribe forever
+              </button>
+            </div>
           </div>
         </div>
       )}

@@ -1,4 +1,6 @@
-﻿const comments = [
+﻿import { GuestbookChaosForm } from "@/components/GuestbookChaosForm";
+
+const comments = [
   "first!!!",
   "wow nice colors my eyes hurt",
   "pls add midi autoplay",
@@ -13,13 +15,7 @@ export default function GuestbookPage() {
       <section className="bad-card border-purple-800 bg-orange-100 p-5">
         <h1 className="text-center text-4xl font-black uppercase">Guestbook</h1>
         <p className="mt-2 text-center text-xs font-black uppercase">All caps feedback only</p>
-        <form className="mt-5 space-y-3">
-          <input className="w-full border-4 border-black bg-white p-2 font-bold" placeholder="YOUR COOL USERNAME" />
-          <textarea className="h-24 w-full border-4 border-black bg-white p-2 font-bold" placeholder="LEAVE CHAOTIC FEEDBACK" />
-          <button className="border-4 border-black bg-fuchsia-300 px-5 py-2 text-sm font-black uppercase">
-            Submit Forever
-          </button>
-        </form>
+        <GuestbookChaosForm />
 
         <div className="mt-6 space-y-2">
           {comments.map((comment) => (

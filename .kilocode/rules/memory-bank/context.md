@@ -95,3 +95,7 @@ export async function GET() {
 | 2026-02-17 | Added fake antivirus modal and random click-blocking shield in src/components/ChaosMode.tsx; scan progress intentionally never reaches 100%, modal reappears after dismiss, and both un run typecheck + un run build pass. |
 
 | 2026-02-17 | Removed the fake virus scanner modal from src/components/ChaosMode.tsx while preserving other chaos interactions (popups, fake loading bars, runaway button, click shield); confirmed un run typecheck passes. |
+
+| 2026-02-17 | Max-chaos pack added: global theme flips + overlapping audio beeps via src/components/ThemeChaos.tsx, nav labels reshuffle on hover via src/components/ChaosNav.tsx, recurring full-screen newsletter trap on scroll in src/components/ChaosMode.tsx, and hostile guestbook form behavior in src/components/GuestbookChaosForm.tsx; verified with un run typecheck and un run build. |
+
+| 2026-02-17 | Added new fake feature pack for competition polish: src/components/FakeFeaturePack.tsx (404 Insurance toast, hover-sensitive Trust Meter, rotating useless AI helper bubble) and integrated it into src/app/page.tsx; build remains green with un run typecheck and un run build. |

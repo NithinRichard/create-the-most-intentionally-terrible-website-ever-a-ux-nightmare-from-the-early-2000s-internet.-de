@@ -1,5 +1,6 @@
 ﻿import Link from "next/link";
 import { ChaosMode } from "@/components/ChaosMode";
+import { FakeFeaturePack } from "@/components/FakeFeaturePack";
 import { RandomLabelButton } from "@/components/RandomizedButtons";
 
 const uselessFacts = [
@@ -55,6 +56,8 @@ export default function Home() {
           ))}
         </ul>
       </section>
+
+      <FakeFeaturePack />
 
       <ChaosMode />
     </main>
